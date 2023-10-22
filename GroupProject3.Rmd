@@ -1,0 +1,28 @@
+---
+title: "GroupProject3"
+author: "Souleymane Doumbia"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Libraries}
+
+library(dplyr)
+
+```
+
+```{r Reading data}
+
+DS_Original <- read_csv("https://raw.githubusercontent.com/Group-Project-Data-607/Project3/main/Data_Science_job.csv", show_col_types = FALSE)
+
+```
+```{r Subsetting Original Data}
+DS_1 <- DS_Original %>%
+ select("title", "company_name", "location", "Job posting location","schedule_type", skills = "Required skills...27")
+  
+```
+
