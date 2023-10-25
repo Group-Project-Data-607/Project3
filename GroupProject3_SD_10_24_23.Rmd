@@ -1,0 +1,89 @@
+---
+title: "GroupProject3"
+author: "Souleymane Doumbia"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Libraries}
+
+library(dplyr)
+library(tidyr)
+library(stringr)
+
+```
+
+```{r Reading data}
+
+DS_Original <- read_csv("https://raw.githubusercontent.com/Group-Project-Data-607/Project3/main/Data_Science_job.csv", show_col_types = FALSE)
+
+```
+
+```{r Subsetting Original Data}
+DS_1 <- DS_Original %>%
+ select("title", Company = "company_name", "location", JobPlatform = "Job posting location","schedule_type", skills = "Required skills...27")%>%
+ mutate(
+    job_title = case_when(
+      grepl("data analyst", title, ignore.case = TRUE) ~ "data analyst",
+      grepl("data science", title, ignore.case = TRUE) ~ "data science",
+      grepl("data engineer", title, ignore.case = TRUE) ~ "data engineer",
+      TRUE ~ NA_character_
+    )
+ )
+
+```
+
+```{r}
+
+DS_2 <- DS_1
+
+# Converting string representation to actual list
+DS_2$skills <- lapply(DS_2$skills, function(x) {
+  # Removing brackets and split the string
+  skills_list <- str_remove_all(x, "\\[|\\]") %>% 
+                 str_split(",") %>%
+                 unlist()
+  # Removing quotes and trim spaces
+  skills_list <- str_remove_all(skills_list, "'") %>%
+                 str_trim()
+  
+  # Returning unique skills
+  return(unique(skills_list))
+})
+
+# Unnesting the skills column
+DS_2_long <- DS_2 %>%
+  tidyr::unnest(skills, keep_empty = TRUE) %>%
+  dplyr::mutate(skills = ifelse(skills == "", NA_character_, skills))
+
+```
+
+**Test1**
+```{r}
+# filtering job title with no defined skills
+f <- DS_2_long %>% select(title, skills, job_title) %>% filter(is.na(skills))
+
+# filtering and grouping job_title with defined skills
+c <- DS_2_long %>% 
+  filter(!is.na(job_title)) %>%
+  group_by(job_title) %>%
+  count(skills)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
