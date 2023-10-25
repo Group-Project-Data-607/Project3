@@ -1,0 +1,54 @@
+---
+title: "Group-Project-Update1"
+author: "Kossi Akplaka"
+date: "2023-10-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an update on how to clean the column title. I'll create a new column called new_title based on the description.
+
+For this following job title, I'll look for this following keywords in the description column:
+
+- data engineer: ETL, pipelines, warehouse, architect
+
+- data science: Machine learning, modeling, A/B testing
+
+- data analyst: All other
+
+If a job description contains both "data analyst" and "data science" keywords, the code will categorize it based on the first condition that matches.
+
+## Import the data
+
+I can import the data from github. 
+
+```{r}
+library(dplyr)
+
+df <- read.csv('https://raw.githubusercontent.com/Group-Project-Data-607/Project3/main/Data_Science_job.csv')
+df
+```
+
+## Make a new_title
+
+```{r}
+title_df <- df %>%
+  mutate(new_title = case_when(
+    grepl("ETL|pipeline|warehouse|architect", description, ignore.case = TRUE) ~ "Data Engineer",
+    grepl("machine learning | modeling|A/B testing", description, ignore.case = TRUE) ~ "Data Science",
+    TRUE ~ "Data analysis"
+  )) %>% 
+  select(title, description, new_title)
+```
+
+## Count of the different title
+
+```{r}
+table(title_df$new_title)
+```
+
