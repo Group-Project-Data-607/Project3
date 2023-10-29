@@ -71,7 +71,10 @@ head(required_skills)
 Remove the special characters in from the 'skills' column for downstream analysis
 ```{r removing special characters}
 
+#this code was found at: https://rdrr.io/github/YangWu1227/citizenr/src/R/clearning-helpers.R 
+
 #function to remove special characters across dataframe
+
 rm_spl_char <- function(df, var) {
   if (is.data.frame(df) == FALSE) {
     stop("'df' must be a data frame", call. = FALSE)
