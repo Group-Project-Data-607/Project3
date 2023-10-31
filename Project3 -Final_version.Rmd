@@ -17,7 +17,7 @@ library(tibble)
 
 ## Introduction:
 
-The goal of this project is to find and use data to answer the question "Which are the most valued data science. Our group members are: Carol Campbell, Kossi Akplaka, Souleymane Doumbia and Saloua Daouki.    
+The goal of this project is to find and use data to answer the question "Which are the most valued data science skills?". Our group members are:  Kossi Akplaka, Carol Campbell, Saloua Daouki, and Souleymane Doumbia.    
 
 We began by searching various websites for suitable data before finally settling on a Kaggle dataset by Luke Barousse, entitled [Data Analyst Skill Analysis](https://www.kaggle.com/code/lukebarousse/data-analyst-skill-analysis?scriptVersionId=111587849&cellId=3). This file was then uploaded into our Github Project 3 repository as "Data_Science_job.csv."
 
